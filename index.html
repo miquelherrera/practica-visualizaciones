@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aire y Educación en Ecuador: Una Narrativa de Datos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fafafa;
+        }
+
+        /* HEADER */
+        header {
+            background: linear-gradient(135deg, #1a9641 0%, #d7191c 100%);
+            color: white;
+            padding: 120px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M0,50 Q300,0 600,50 T1200,50 L1200,120 L0,120 Z" fill="rgba(255,255,255,0.1)"/></svg>') repeat-x;
+            background-size: 600px 120px;
+            animation: wave 15s linear infinite;
+        }
+
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(600px); }
+        }
+
+        header > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            font-weight: 300;
+            max-width: 800px;
+            margin: 0 auto 20px;
+			color: white;
+			text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            opacity: 0.95;
+        }
+
+        .meta {
+            font-size: 0.95em;
+            opacity: 0.8;
+			color: white;
+			text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin-top: 20px;
+        }
+
+        /* CONTENIDO PRINCIPAL */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        section {
+            margin: 100px 0;
+            padding: 60px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-size: 2.2em;
+            color: #1a9641;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: #d7191c;
+            border-radius: 2px;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            color: #333;
+            margin: 30px 0 15px 0;
+        }
+
+        p {
+            font-size: 1.05em;
+            margin-bottom: 18px;
+            color: #444;
+            line-height: 1.8;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+            color: #d7191c;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+            border-left: 4px solid #1a9641;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .stat-box strong {
+            color: #d7191c;
+            font-size: 1.2em;
+        }
+
+        /* IMAGENES Y GRÁFICOS */
+        .graphic-container {
+            margin: 50px 0;
+            text-align: center;
+        }
+
+        .graphic-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .graphic-container img:hover {
+            transform: translateY(-5px);
+        }
+
+        .graphic-caption {
+            font-size: 0.95em;
+            color: #666;
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        /* MAPA */
+        .map-section {
+            background: #f0f0f0;
+            padding: 60px 0;
+            margin: 80px 0;
+        }
+
+        .map-container {
+            position: relative;
+            width: 100%;
+            height: 800px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            margin-top: 30px;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* HALLAZGOS CLAVE */
+        .findings {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .finding-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            border-top: 4px solid #d7191c;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .finding-card:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            transform: translateY(-3px);
+        }
+
+        .finding-card h4 {
+            color: #1a9641;
+            margin-bottom: 12px;
+            font-size: 1.15em;
+        }
+
+        .finding-card p {
+            font-size: 0.95em;
+            color: #666;
+        }
+
+        /* CONCLUSIONES */
+        .conclusions {
+            background: linear-gradient(135deg, #1a9641 0%, #2cb85c 100%);
+            color: white;
+            padding: 60px 40px;
+            border-radius: 8px;
+            margin-top: 80px;
+        }
+
+        .conclusions h2 {
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .conclusions h2::after {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .conclusions p {
+            color: rgba(255,255,255,0.95);
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        .recommendations {
+            background: rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 6px;
+            margin-top: 30px;
+            border-left: 4px solid white;
+        }
+
+        .recommendations h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .recommendations ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .recommendations li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .recommendations li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* FOOTER */
+        footer {
+            background: green;
+            color: #ccc;
+            text-align: center;
+            padding: 30px;
+            margin-top: 80px;
+            font-size: 0.95em;
+        }
+
+        footer a {
+            color: #1a9641;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2em;
+            }
+
+            h2 {
+                font-size: 1.6em;
+            }
+
+            .container {
+                padding: 0 20px;
+            }
+
+            section {
+                margin: 50px 0;
+                padding: 30px 0;
+            }
+
+            header {
+                padding: 60px 20px;
+            }
+        }
+
+        /* SCROLL ANIMATION */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+    <h1>Calidad del aire, pobreza y resultados de aprendizaje en Ecuador</h1>
+    <p class="subtitle">¿Cómo la calidad del aire y el nivel socioeconómico afectan el desempeño académico de nuestros estudiantes?</p>
+    <p class="meta">Una narrativa de datos basada en análisis de 2023-2024</p>
+</header>
+
+<div class="container">
+
+<!-- SECCIÓN 1: INTRODUCCIÓN -->
+<section class="fade-in">
+    <h2>La Pregunta</h2>
+    <p>
+        Esta visualización propone un recorrido exploratorio por las intersecciones territoriales entre la calidad del aire, la pobreza y la educación en Ecuador: <span class="highlight">¿existe una relación entre la contaminación del aire (PM2.5) 
+        y los resultados de aprendizaje?</span>
+    </p>
+    
+</section>
+
+<!-- SECCIÓN 2: CONTEXTO -->
+<section class="fade-in">
+    <h2>Contexto: El ambiental y los resultados de aprendizaje</h2>
+    <p>
+        La contaminación del aire es un problema de salud pública bien documentado. Las partículas finas (PM2.5) penetran profundamente 
+        en el sistema respiratorio, afectando no solo la salud física sino también la capacidad cognitiva y el rendimiento académico.
+    </p>
+    <div class="stat-box">
+        <p><strong>¿Sabías que?</strong> Estudios internacionales han demostrado que la exposición a altos niveles de PM2.5 está asociada 
+        con problemas de concentración, memoria y desempeño académico en niños y adolescentes.</p>
+    </div>
+    <p>
+        En Ecuador, existen parroquias con niveles de PM2.5 significativamente elevados, especialmente en zonas urbanas con alto tráfico 
+        vehicular e industrias. Simultáneamente, el sistema educativo muestra disparidades marcadas en desempeño entre regiones, 
+        frecuentemente correlacionadas con niveles de pobreza.
+    </p>
+</section>
+
+<!-- SECCIÓN 3: ANÁLISIS 1 -->
+<section class="fade-in">
+    <h2>Análisis 1: La correlación calidad del aire-desempeño académico</h2>
+    <p>
+        Nuestro primer gráfico muestra la relación directa entre la calidad del aire (PM2.5) y el promedio de notas de los y las estudiantes. 
+        Cada punto representa una parroquia, coloreada según su quintil socioeconómico.
+    </p>
+    <div class="graphic-container">
+        <img src="grafico_1_scatter_aire_desempenio.png" alt="Scatter plot: PM2.5 vs Desempeño">
+        <p class="graphic-caption">Gráfico 1: Relación entre PM2.5 y desempeño académico (cada punto = una parroquia)</p>
+    </div>
+    <h3>¿Qué vemos?</h3>
+    <p>
+        <strong>Una tendencia negativa débil pero consistente:</strong> Las parroquias con aire más limpio (izquierda) tienden a tener 
+        estudiantes con mejores calificaciones.
+    </p>
+    <p>
+        <strong>La importancia del nivel socioeconómico:</strong> Los puntos rojos (quintil 1, más pobres) tienden a agruparse en la parte 
+        inferior, mientras que los verdes (quintil 5, más ricos) están arriba. Esto sugiere que <span class="highlight">la pobreza y el aire 
+        contaminado a menudo van juntos</span>, creando un efecto amplificado.
+    </p>
+</section>
+
+<!-- SECCIÓN 4: ANÁLISIS 2 -->
+<section class="fade-in">
+    <h2>Análisis 2: Distribución del desempeño escolar según la calidad del aire</h2>
+    <p>
+        Para simplificar el análisis, categorizamos el aire en tres niveles: limpio, promedio y sucio. El siguiente gráfico muestra 
+        cómo varía la distribución de calificaciones en cada categoría.
+    </p>
+    <div class="graphic-container">
+        <img src="grafico_2_boxplot_aire_desempenio.png" alt="Box plot: Desempeño por categoría de aire">
+        <p class="graphic-caption">Gráfico 2: Distribución de desempeño por categoría de aire</p>
+    </div>
+    <h3>Interpretación</h3>
+    <p>
+        <strong>Aire limpio:</strong> La mediana es más alta, alrededor de 700 puntos. Hay menos variabilidad y menos casos extremos de bajo desempeño.
+    </p>
+    <p>
+        <strong>Aire sucio:</strong> La mediana baja a ~680 puntos, con mayor dispersión. Hay más parroquias con desempeño muy bajo y más casos de variabilidad.
+    </p>
+    
+</section>
+
+<!-- SECCIÓN 5: ANÁLISIS 3 - INTERACCIÓN -->
+<section class="fade-in">
+    <h2>Análisis 3: El efecto combinado - Aire × Pobreza</h2>
+    <p>
+        El siguiente mapa de calor muestra el desempeño promedio en función de la calidad del aire y las condiciones socioeconómicas.
+    </p>
+    <div class="graphic-container">
+        <img src="grafico_3_heatmap_interaccion.png" alt="Heatmap: Interacción aire y pobreza">
+        <p class="graphic-caption">Gráfico 3: Desempeño según calidad del aire y nivel socioeconómico</p>
+    </div>
+    <h3>Los Hallazgos Clave</h3>
+    <div class="findings">
+        <div class="finding-card">
+            <h4>🟢 El Mejor Escenario</h4>
+            <p><strong>Aire limpio + Pobreza baja = 696 puntos</strong> (1,555 estudiantes)<br>
+            El desempeño más alto. Estos estudiantes tienen ventajas dobles.</p>
+        </div>
+        <div class="finding-card">
+            <h4>🔴 El Peor Escenario</h4>
+            <p><strong>Aire sucio + Pobreza baja = 679 puntos</strong> (10,707 estudiantes)<br>
+            Una brecha de 17 puntos. Y afecta a más de 10,000 estudiantes.</p>
+        </div>
+        <div class="finding-card">
+            <h4>⚠️ La Sorpresa</h4>
+            <p><strong>Aire limpio + Pobreza alta = 694 puntos</strong> (1,635 estudiantes)<br>
+            Comparable al mejor escenario. El aire limpio compensa parcialmente la pobreza.</p>
+        </div>
+        
+    </div>
+</section>
+
+
+<!-- SECCIÓN 6: MAPA INTERACTIVO -->
+<section class="map-section fade-in">
+    <div class="container">
+        <h2>Exploración geográfica: El mapa interactivo </h2>
+        <
+		<p>
+            Los datos ganan vida cuando los vemos en el territorio. El siguiente mapa te permite explorar cada parroquia, 
+            ver su clasificación de escenario y desempeño. Cambia entre capas para ver diferentes niveles educativos. (Toma un minuto en cargar)
+        </p>
+        <div class="map-container">
+            <iframe src="mapa_interactivo_2.html" title="Mapa interactivo de parroquias"></iframe>
+        </div>
+        <p class="graphic-caption" style="margin-top: 20px;">
+            Interactúa con el mapa: selecciona diferentes capas en el control de arriba a la derecha, 
+            haz zoom y haz clic en las parroquias para ver detalles.
+        </p>
+    </div>
+</section>
+
+<!-- SECCIÓN 7: CONCLUSIONES -->
+<section class="fade-in">
+    <div class="conclusions">
+        <h2>Conclusiones: Lo que hemos aprendido</h2>
+        
+        <h3>1. Sí, el aire importa</h3>
+        <p>
+            Existe una relación consistente entre la calidad del aire y el desempeño académico. Las ylos estudiantes en zonas con aire más limpio tienden a tener mejores calificaciones.
+        </p>
+
+        <h3>2. Pero no es solo aire</h3>
+        <p>
+            La pobreza es un factormás importante. No obstante, el análisis sugiere que 
+            una zona pobre pero con aire limpio puede compensar parcialmente la desventaja socioeconómica.
+        </p>
+
+        <h3>3. Los efectos se amplifican</h3>
+        <p>
+            El verdadero problema surge cuando aire sucio y pobreza coexisten. Esto crea una situación de 
+            <span class="highlight">"vulnerabilidad"</span> que afecta a miles de estudiantes en el Ecuador.
+        </p>
+
+        <h3>4. La resiliencia es posible</h3>
+        <p>
+            Existen 28 parroquias que logran excelente desempeño a pesar del aire contaminado. Esto prueba que 
+            las condiciones ambientales no son determinantes. Hay factores protectores (programas educativos, 
+            liderazgo escolar, apoyo comunitario) que pueden compensar.
+        </p>
+
+        <div class="recommendations">
+            <h3>Recomendaciones para políticas públicas</h3>
+            <ul>
+                <li><strong>Prioridad 1:</strong> Intervención urgente en zonas de triple vulnerabilidad (40 parroquias)
+                <li><strong>Prioridad 2:</strong> Mejorar calidad del aire en zonas urbanas de alto tráfico
+                <li><strong>Prioridad 3:</strong> Fortalecer programas educativos en zonas pobres (la resiliencia se puede enseñar)
+                <li><strong>Prioridad 4:</strong> Monitoreo continuo de PM2.5 como indicador de salud pública
+                <li><strong>Prioridad 5:</strong> Estudiar los factores de éxito en las 28 parroquias resilientes
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION 8: METODOLOGÍA -->
+<section class="fade-in">
+    <h2>Metodología</h2>
+    <h3>Datos utilizados</h3>
+    <p>
+		<strong>Desempeño académico y contexto socioeconómico:</strong> Datos del proceso <a href="https://www.datosabiertos.gob.ec/dataset/ser-estudiante/resource/2ce5b28d-4088-4c76-ac2e-af341bd247e6" target="_blank" style="color: inherit; text-decoration: underline;">SER Estudiante (INEVAL)</a> correspondientes al periodo 2023-2024.<br>
+<strong>Calidad del aire:</strong> Concentraciones de <a href="https://sites.wustl.edu/acag/surface-pm2-5/" target="_blank" style="color: inherit; text-decoration: underline;">PM2.5 (SatPM2.5)</a> derivadas de instrumentos satelitales y agregadas a nivel parroquial.<br>
+<span style="font-size: 0.9em; opacity: 0.9;">* Todos los conjuntos de datos se distribuyen bajo licencia Creative Commons.</span>
+    </p>
+</section>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <p>
+        <strong>Análisis realizado por:</strong> Miguel Herrera<br>
+        <strong>Asignatura: Visualización de datos<br>
+        <strong>Maestría en Ciencia de datos</strong> Primer semestre 2025/26<br>
+		<strong> Universitat Oberta de Catalunya</strong><br>
+        
+    </p>
+</footer>
+
+<script>
+// SCROLL ANIMATION
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+};
+
+const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('.fade-in').forEach(el => {
+    observer.observe(el);
+});
+</script>
+
+</body>
+</html>
